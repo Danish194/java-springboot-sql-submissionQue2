@@ -26,7 +26,7 @@ public class DemoApplication {
         RestTemplate restTemplate = new RestTemplate();
         ObjectMapper mapper = new ObjectMapper();
 
-        // Step 1: Generate webhook
+        
         String genUrl = "https://bfhldevapigw.healthrx.co.in/hiring/generateWebhook/JAVA";
         String body = "{\"name\":\"Danish Shah\",\"regNo\":\"22BCI0194\",\"email\":\"danish.piyushbhai2022@vitstudent.ac.in\"}";
 
@@ -42,7 +42,6 @@ public class DemoApplication {
         System.out.println("Webhook: " + webhookUrl);
         System.out.println("AccessToken: " + token);
 
-        // Step 2: Your SQL query (Question 2)
         String sql =
             "SELECT e.EMP_ID, e.FIRST_NAME, e.LAST_NAME, d.DEPARTMENT_NAME, " +
             "COUNT(e2.EMP_ID) AS YOUNGER_EMPLOYEES_COUNT " +
@@ -52,11 +51,10 @@ public class DemoApplication {
             "GROUP BY e.EMP_ID, e.FIRST_NAME, e.LAST_NAME, d.DEPARTMENT_NAME " +
             "ORDER BY e.EMP_ID DESC";
 
-        // Step 3: Submit SQL to testWebhook
         String testUrl = "https://bfhldevapigw.healthrx.co.in/hiring/testWebhook/JAVA";
         HttpHeaders testHeaders = new HttpHeaders();
         testHeaders.setContentType(MediaType.APPLICATION_JSON);
-        testHeaders.set("Authorization", token); // If fails, use testHeaders.setBearerAuth(token);
+        testHeaders.set("Authorization", token); 
 
         String finalBody = "{\"finalQuery\":\"" + sql.replace("\"", "\\\"") + "\"}";
         HttpEntity<String> testEntity = new HttpEntity<>(finalBody, testHeaders);
